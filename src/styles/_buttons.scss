@@ -1,0 +1,21 @@
+
+.voting {
+    @include flex(column);
+    background: #F1F1F1;
+    width: 2rem;
+    height:  6rem;
+    text-align: center;
+
+    &__btn {
+        flex: 1;
+        color: $color-primary;
+        
+    }
+
+    &__number {
+        flex: 1;
+        color: $color-primary;
+       
+    }
+    
+}

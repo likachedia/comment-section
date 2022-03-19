@@ -1,0 +1,35 @@
+@mixin flex($direction: row, $justify: stretch, $align: stretch) {
+    display: flex;
+    justify-content: $justify;
+    align-items: $align;
+    flex-direction: $direction;
+}
+
+@mixin btn-number($btn-width:2rem, $btn-height: 6rem) {
+    @include flex(column, stretch, stretch);
+    // -webkit-box-align: center;
+    background: #F1F1F1;
+    width: $btn-width;
+    height:  $btn-height;
+    .minus, .plus {
+        @include flex(row, center, center);
+        color: #000000;
+        font-size: 0.9375rem;
+        width: 100%;
+        background: gray;
+        height: 40%;
+        border: none;
+    }
+
+    .minus:hover, .plus:hover {
+        background: #d8d6d6;
+        border: none;
+        color: $color-primary;
+    }
+
+    .number {
+        @include flex(row, center, center);
+        font-size: 0.8125rem;
+        width: 20%;
+    }
+}

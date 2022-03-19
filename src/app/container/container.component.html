@@ -1,0 +1,9 @@
+<section *ngFor="let comment of commentsArry" class="section">
+    <app-comment [comment]="comment">
+    </app-comment>
+</section>
+<section  class="section" *ngIf="currentUser">
+    <app-reply>
+
+    </app-reply>
+</section>

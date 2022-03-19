@@ -1,0 +1,13 @@
+<section class="card comm-margin" >
+    <div class="card__aside">
+        <div class="card__img">
+            <img [src]="imagePath" alt="profile-image">
+        </div>
+    </div>
+    <div class="card__main">
+        <input type="text" [(ngModel)]="content" />
+    </div>
+    <div class="card__action">
+        <button type="button" class="" (click)="addComment()">add</button>
+    </div> 
+</section>
