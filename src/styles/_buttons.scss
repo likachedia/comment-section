@@ -9,13 +9,54 @@
     &__btn {
         flex: 1;
         color: $color-primary;
-        
+        border: none;       
     }
 
     &__number {
         flex: 1;
-        color: $color-primary;
-       
+        color: $color-primary;      
+    }   
+}
+
+.btn {
+    position: relative;
+    border: none;
+    padding: 5px 10px;
+    background-color: transparent;
+    font-weight: bold;
+    border-radius: 0.5rem;
+
+    &--delete {
+        color: rgb(209, 54, 54);
+        &::before{
+            content: '\f2ed';
+        }
     }
-    
+
+    &--update {
+        &::before{
+            font-family: "Font Awesome 5 Free";
+            content: '\f044';
+        }
+    }
+
+    &--reply {
+        
+        color: #8007a5;
+
+        &::before{
+            content: '';
+        }
+
+        &:hover{
+            background-color: #e2a9f1;
+            opacity: 0.5;
+        }
+    }
+
+    &::before{
+        position: absolute;
+        left: -5px;
+        font-family: "Font Awesome 5 Free";
+    }
 }

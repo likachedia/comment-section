@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { SetDataService } from '../shared/currentUser.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SetDataService } from '../shared/setDataService.service';
 import { StorageService } from '../shared/storageService.service';
-import { Comment, User } from '../shared/utils';
+import { Comment, Reply, User } from '../shared/utils';
 
 @Component({
   selector: 'app-reply',
@@ -9,6 +9,9 @@ import { Comment, User } from '../shared/utils';
   styleUrls: ['./reply.component.scss']
 })
 export class ReplyComponent implements OnInit {
+  @Input() reply!: Reply | Comment
+  // @Output() addComm: EventEmitter<Comment | Reply> = new EventEmitter()
+   @Output() hidereply: EventEmitter<Boolean> = new EventEmitter()
   currentUser!: User
   comments: Comment[] = []
   imagePath = ''
@@ -24,22 +27,69 @@ export class ReplyComponent implements OnInit {
     this.imagePath =`../../${this.currentUser?.image?.png}`
   }
 
-  addComment() {
-    const newComment: Comment = {
-      id: this.comments.length + 1,
-      content: this.content,
-      createdAt: "something",
-      score: 0,
-      user: this.currentUser,
-      replies: []
+  addReply(reply: Comment | Reply) {
+    let newReply: Reply;
+
+    if('replyingTo' in reply) {
+      let id =  this.setDataService.commentsArray.filter((ele) => ele.user.username == reply.replyingTo)[0].replies?.length;
+       newReply = {
+        id: id! + 1,
+        content: this.content,
+        createdAt: this.getCreatedData(),
+        score: 0,
+        user: this.currentUser,
+        replies: [],
+        replyingTo: reply.replyingTo
+      } 
+     
+    } else {
+      newReply = {
+        id: this.reply.replies!.length + 1,
+        content: this.content,
+        createdAt: this.getCreatedData(),
+        score: 0,
+        user: this.currentUser,
+        replies: [],
+        replyingTo: reply.user.username
+      }
     }
-    this.setDataService.addComment(newComment);
+    this.setDataService.addReply(newReply);
+    this.hidereply.emit(true);
     this.content = ''
   }
 
+  getCreatedData() {
+    const dateObj = new Date();
+    let month = dateObj.getUTCMonth() + 1; //months from 1-12
+    let day = dateObj.getUTCDate();
+    let year = dateObj.getUTCFullYear();
+
+    let newdate = year + " " + month + " " + day;
+    return newdate.toString();
+  }
+ 
+
+  addComment() {
+    console.log(this.reply)
+
+    if(this.reply) {
+      this.addReply(this.reply);
+    } else {
+      const newComment: Comment = {
+        id: this.comments.length + 1,
+        content: this.content,
+        createdAt: new Date().toString(),
+        score: 0,
+        user: this.currentUser,
+        replies: []
+      }
+      this.setDataService.addComment(newComment);
+      this.content = ''
+    }
+  }
+
   async modifayData() {
-    // await this.setDataService.setData()
-    this.comments = this.storageService.getFromLocalStorage('comments')
-    this.currentUser = this.storageService.getFromLocalStorage('currentUser')
+    this.comments = this.setDataService.commentsArray
+    this.currentUser = this.setDataService.currentUser
   }
 }

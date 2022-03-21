@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { SetDataService } from '../shared/currentUser.service';
+import { SetDataService } from '../shared/setDataService.service';
 import { StorageService } from '../shared/storageService.service';
 import { Reply, User, Comment } from '../shared/utils';
 
@@ -15,6 +15,7 @@ export class CommentReplyComponent implements OnInit {
   isCurrentUser = false
   replying = false
   imagePath = ""
+  updaiting = false
 
   constructor(private setDataService: SetDataService, private storageService: StorageService,) { }
 
@@ -26,14 +27,31 @@ export class CommentReplyComponent implements OnInit {
     this.isCurrentUser = this.reply.user.username == this.currentUser.username
   }
 
-  
-
   displyReply() {
     this.replying = !this.replying
   }
 
+  updateReply(reply: Reply) {
+    this.updaiting = !this.updaiting;
+    this.setDataService.updateReply(reply);
+  }
+
+  increaseScore(reply: Reply) {
+    this.reply.score++;
+    console.log(this.reply.score)
+    this.setDataService.changeScoreReply(reply, this.reply.score)
+  }
+
+  decreaseScore(reply: Reply) {
+    this.reply.score--
+    this.setDataService.changeScoreReply(reply, this.reply.score);
+  }
+
+  deleteComment(reply: Reply) {
+    console.log('from delet func reply')
+    this.setDataService.deleteReply(reply);
+  }
   async modifayData() {
-    // await this.setDataService.setData()
     this.comments = this.storageService.getFromLocalStorage('comments')
     this.currentUser = this.storageService.getFromLocalStorage('currentUser')
   }

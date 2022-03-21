@@ -1,0 +1,12 @@
+.border {
+    position: relative;
+    &::before {
+        position: absolute;
+        left: -100px;
+        border-left: 2px solid gray;
+        height: 100%;
+        width: 100px;
+        z-index: 100;
+        background-color: red;
+    }
+}

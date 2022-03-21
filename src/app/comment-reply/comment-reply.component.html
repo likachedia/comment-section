@@ -1,9 +1,9 @@
-<section class="card">
+<section class="card border">
     <div class="card__aside">
         <div class="voting">
-            <button class="voting__btn">+</button>
-            <span class="voting__number">0</span>
-            <button class="voting__btn">-</button>
+            <button class="voting__btn" (click)="increaseScore(reply)">+</button>
+            <span class="voting__number">{{reply.score}}</span>
+            <button class="voting__btn" (click)="decreaseScore(reply)">-</button>
         </div>
     </div>
     <div class="card__main">
@@ -15,14 +15,19 @@
             <span>{{reply.createdAt}}</span>
 
             <div class="card__header-actions">
-                <button type="button" *ngIf="isCurrentUser">delete</button>
-                <button type="button" *ngIf="isCurrentUser">edit</button>
-                <button type="button" (click)="displyReply()">Reply</button>
+                <button type="button" *ngIf="isCurrentUser" (click)="deleteComment(reply)" class="btn btn--delete">delete</button>
+                <button type="button" *ngIf="isCurrentUser" (click)="updateReply(reply)" class="btn btn--update">edit</button>
+                <button type="button" (click)="displyReply()" *ngIf="!isCurrentUser" class="btn btn--reply">Reply</button>
             </div>
             
         </div>
-        <div class="card__content">{{reply.content}}</div>
+        <div class="card__content">
+            <ng-container *ngIf="!updaiting">{{'@'+reply.replyingTo + " "+ reply.content}}</ng-container>
+            <!-- <input type="text" [(ngModel)]='reply.content' *ngIf="updaiting"/> -->
+            <textarea name="coment-content" id="" cols="30" rows="10" [(ngModel)]='reply.content' *ngIf="updaiting"></textarea>
+            
+        </div>
     </div>
 </section>
-<app-reply *ngIf="replying" >
+<app-reply *ngIf="replying" [reply]="reply" (hidereply)="displyReply()">
 </app-reply>
