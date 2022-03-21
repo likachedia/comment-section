@@ -11,7 +11,6 @@ import { Reply, User, Comment } from '../shared/utils';
 export class CommentReplyComponent implements OnInit {
   @Input() reply!: Reply
   currentUser!: User
-  comments: Comment[] = []
   isCurrentUser = false
   replying = false
   imagePath = ""
@@ -20,9 +19,7 @@ export class CommentReplyComponent implements OnInit {
   constructor(private setDataService: SetDataService, private storageService: StorageService,) { }
 
   ngOnInit(): void {
-    this.modifayData()
-    // this.comments = this.setDataService.commentsArray
-    // this.currentUser = this.setDataService.currentUser
+    this.currentUser = this.setDataService.currentUser
     this.imagePath = `../${this.reply?.user?.image?.png}`
     this.isCurrentUser = this.reply.user.username == this.currentUser.username
   }
@@ -38,7 +35,6 @@ export class CommentReplyComponent implements OnInit {
 
   increaseScore(reply: Reply) {
     this.reply.score++;
-    console.log(this.reply.score)
     this.setDataService.changeScoreReply(reply, this.reply.score)
   }
 
@@ -48,12 +44,7 @@ export class CommentReplyComponent implements OnInit {
   }
 
   deleteComment(reply: Reply) {
-    console.log('from delet func reply')
     this.setDataService.deleteReply(reply);
-  }
-  async modifayData() {
-    this.comments = this.storageService.getFromLocalStorage('comments')
-    this.currentUser = this.storageService.getFromLocalStorage('currentUser')
   }
 
 }

@@ -17,13 +17,10 @@ export class ReplyComponent implements OnInit {
   imagePath = ''
   content = ''
 
-  constructor(private setDataService: SetDataService, private storageService: StorageService,) { }
+  constructor(private setDataService: SetDataService) { }
   
   ngOnInit() {
-    this.modifayData()
-    // await this.setDataService.setData();
-    // this.comments = this.setDataService.commentsArray
-    // this.currentUser = this.setDataService.currentUser
+    this.currentUser = this.setDataService.currentUser
     this.imagePath =`../../${this.currentUser?.image?.png}`
   }
 
@@ -60,7 +57,7 @@ export class ReplyComponent implements OnInit {
 
   getCreatedData() {
     const dateObj = new Date();
-    let month = dateObj.getUTCMonth() + 1; //months from 1-12
+    let month = dateObj.getUTCMonth() + 1;
     let day = dateObj.getUTCDate();
     let year = dateObj.getUTCFullYear();
 
@@ -78,7 +75,7 @@ export class ReplyComponent implements OnInit {
       const newComment: Comment = {
         id: this.comments.length + 1,
         content: this.content,
-        createdAt: new Date().toString(),
+        createdAt: this.getCreatedData(),
         score: 0,
         user: this.currentUser,
         replies: []
@@ -88,8 +85,4 @@ export class ReplyComponent implements OnInit {
     }
   }
 
-  async modifayData() {
-    this.comments = this.setDataService.commentsArray
-    this.currentUser = this.setDataService.currentUser
-  }
 }

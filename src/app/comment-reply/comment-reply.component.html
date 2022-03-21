@@ -24,7 +24,7 @@
         <div class="card__content">
             <ng-container *ngIf="!updaiting">{{'@'+reply.replyingTo + " "+ reply.content}}</ng-container>
             <!-- <input type="text" [(ngModel)]='reply.content' *ngIf="updaiting"/> -->
-            <textarea name="coment-content" id="" cols="30" rows="10" [(ngModel)]='reply.content' *ngIf="updaiting"></textarea>
+            <textarea name="coment-content" id="" cols="50" rows="60" [(ngModel)]='reply.content' *ngIf="updaiting"></textarea>
             
         </div>
     </div>

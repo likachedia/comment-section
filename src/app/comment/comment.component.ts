@@ -20,8 +20,7 @@ export class CommentComponent implements OnInit {
   constructor(private setDataService: SetDataService, private storageService: StorageService,) { }
 
   ngOnInit(): void {
-    this.modifayData()
-    // this.currentUser = this.setDataService.currentUser
+    this.currentUser = this.setDataService.currentUser
     this.imagePath = `../${this.comment?.user?.image?.png}`
     this.isCurrentUser = this.comment.user.username == this.currentUser.username
   }
@@ -36,15 +35,12 @@ export class CommentComponent implements OnInit {
   }
 
   deleteComment(id: number) {
-    // this.delete.emit(id);
-    console.log('from delet func')
     this.setDataService.deleteComment(id);
     console.log(this.setDataService.commentsArray)
   }
 
   increaseScore(id: number) {
     this.comment.score++;
-    console.log(this.comment.score)
     this.setDataService.changeScore(id, this.comment.score)
   }
 
@@ -53,9 +49,4 @@ export class CommentComponent implements OnInit {
     this.setDataService.changeScore(id, this.comment.score);
   }
 
-  async modifayData() {
-  //  await this.setDataService.setData()
-  //  this.commentsArry = this.storageService.getFromLocalStorage('comments')
-   this.currentUser = this.setDataService.currentUser
- }
 }
