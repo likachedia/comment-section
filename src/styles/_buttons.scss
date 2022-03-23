@@ -1,20 +1,24 @@
 
 .voting {
     @include flex(column);
-    background: #F1F1F1;
+    background: $color-gray;
     width: 2rem;
-    height:  6rem;
+    height:  5rem;
     text-align: center;
+    border-radius: 0.5rem;
+    font-weight: bold;
 
     &__btn {
         flex: 1;
         color: $color-primary;
-        border: none;       
+        border: none;
+        border-radius: 0.8rem;
     }
 
     &__number {
         flex: 1;
-        color: $color-primary;      
+        color: $color-primary;
+        padding-top: 5px; 
     }   
 }
 
@@ -26,38 +30,36 @@
     font-weight: bold;
     border-radius: 0.5rem;
 
+    &:hover {
+        cursor: pointer;
+        opacity: 0.5;
+    }
+
     &--delete {
-        color: rgb(209, 54, 54);
-        &::before{
-            content: '\f2ed';
-        }
+        color: $color-helper;
     }
 
     &--update {
-        &::before{
-            font-family: "Font Awesome 5 Free";
-            content: '\f044';
-        }
+
     }
 
     &--reply {
         
-        color: #8007a5;
-
-        &::before{
-            content: '';
-        }
+        color: $color-primary;
 
         &:hover{
             color: #F1F1F1;
-            background-color: #e2a9f1;
+            background-color: $color-primary;
             opacity: 0.5;
         }
     }
 
-    &::before{
-        position: absolute;
-        left: -5px;
-        font-family: "Font Awesome 5 Free";
+    &--add {
+        width: 105px;
+        height: 48px;
+        color: #F1F1F1;
+        background-color: $color-primary;
+        text-transform: uppercase;
     }
 }
+

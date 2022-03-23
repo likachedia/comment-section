@@ -10,9 +10,10 @@ export class StorageService {
         localStorage.setItem(key, stingified);    
     }
 
-    getFromLocalStorage(key:string) {
-        return JSON.parse(localStorage.getItem(key)!)
-        ? JSON.parse(localStorage.getItem(key)!)
-        : [];
+    getFromLocalStorage<T>(key: string): T  | null {
+        return localStorage.getItem(key) ? JSON.parse(localStorage.getItem(key)!) : null
+        // return JSON.parse(localStorage.getItem(key)!)
+        // ? JSON.parse(localStorage.getItem(key)!)
+        // : [];
     }
 }

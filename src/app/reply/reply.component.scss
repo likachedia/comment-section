@@ -1,3 +1,11 @@
 .comm-margin {
     margin-top: 0.5rem;
 }
+@keyframes add {
+    0% {top: -300}
+    100% {top: 0}
+}
+.animation {
+    animation: add 3s;
+    animation-delay: 1s;   
+}

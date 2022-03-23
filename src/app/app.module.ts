@@ -8,6 +8,7 @@ import { CommentComponent } from './comment/comment.component';
 import { CommentReplyComponent } from './comment-reply/comment-reply.component';
 import { ReplyComponent } from './reply/reply.component';
 import { FormsModule } from '@angular/forms';
+import { SortPipe } from './sort.pipe';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { FormsModule } from '@angular/forms';
     CommentComponent,
     CommentReplyComponent,
     ReplyComponent,
+    SortPipe,
   ],
   imports: [
     BrowserModule,

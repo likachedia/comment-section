@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SetDataService } from '../shared/setDataService.service';
-import { StorageService } from '../shared/storageService.service';
 import { Comment, Reply, User } from '../shared/utils';
 
 @Component({
@@ -10,7 +9,6 @@ import { Comment, Reply, User } from '../shared/utils';
 })
 export class ReplyComponent implements OnInit {
   @Input() reply!: Reply | Comment
-  // @Output() addComm: EventEmitter<Comment | Reply> = new EventEmitter()
    @Output() hidereply: EventEmitter<Boolean> = new EventEmitter()
   currentUser!: User
   comments: Comment[] = []
@@ -67,13 +65,12 @@ export class ReplyComponent implements OnInit {
  
 
   addComment() {
-    console.log(this.reply)
 
     if(this.reply) {
       this.addReply(this.reply);
     } else {
       const newComment: Comment = {
-        id: this.comments.length + 1,
+        id: Date.now(),
         content: this.content,
         createdAt: this.getCreatedData(),
         score: 0,

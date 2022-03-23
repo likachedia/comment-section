@@ -11,7 +11,7 @@
             <div class="card__header-img">
                 <img [src]="imagePath" alt="profile-image">
             </div>               
-             <small>{{comment.user.username}}</small>
+             <small *ngIf="!isCurrentUser; else you">{{comment.user.username}}</small>
             <span>{{comment.createdAt}}</span>
 
             <div class="card__header-actions">
@@ -24,10 +24,8 @@
         <div class="card__content">
             <ng-container *ngIf="!updaiting">
                 {{comment.content}}
-            </ng-container>
-           
-            <!-- <input type="text" [(ngModel)]='comment.content' *ngIf="updaiting"/> -->
-            <textarea name="coment-content" id="" cols="30" rows="10" [(ngModel)]='comment.content' *ngIf="updaiting"></textarea>
+            </ng-container>          
+            <textarea name="coment-content" id="" cols="20" rows="10" [(ngModel)]='comment.content' *ngIf="updaiting"></textarea>
         </div>
     </div>
 </section>
@@ -36,12 +34,12 @@
 </app-reply>
 <section class="reply-container">
     <ng-container *ngFor="let replay of comment.replies">
-        <app-comment-reply [reply]="replay">
+        <app-comment-reply [reply]="replay" >
         
         </app-comment-reply>
     </ng-container>
 </section>
 
-
-
-
+<ng-template #you>
+<span class="you">You</span>
+</ng-template>

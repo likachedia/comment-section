@@ -1,5 +1,5 @@
-<section *ngFor="let comment of setDataService.commentsArray" class="section">
-    <app-comment [comment]="comment" >
+<section *ngFor="let comment of setDataService.commentsArray | sort" class="section">
+    <app-comment [comment]="comment">
     </app-comment>
 </section>
 <section  class="section" *ngIf="currentUser">

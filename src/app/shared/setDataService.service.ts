@@ -7,17 +7,18 @@ import { Comment, Data, Reply, User } from "./utils";
     providedIn: 'root'
 })
 export class SetDataService {
-
-    constructor (private dataservice: DataService, private storageService: StorageService) {
-    }
-
     currentUser!: User
     commentsArray: Comment[] = []
     replying = false
 
+    constructor (private dataservice: DataService, private storageService: StorageService) {
+    }
+
+
+
     async setData() {
         const data: Data = await this.dataservice.getData()
-        this.commentsArray = this.storageService.getFromLocalStorage('comments');
+        this.commentsArray = this.storageService.getFromLocalStorage('comments') ? this.storageService.getFromLocalStorage('comments')! : [];
         if(!this.commentsArray || this.commentsArray.length == 0) {
             this.commentsArray = data.comments;
         }
@@ -32,7 +33,6 @@ export class SetDataService {
     }
 
     addReply(reply: Reply) {
-        console.log('from service')
         let username = reply.replyingTo
         this.commentsArray = this.commentsArray.map((ele) => {
             if(ele.user.username == username) {
@@ -41,7 +41,7 @@ export class SetDataService {
             }
             return ele;
         })
-
+        
         this.storageService.saveToLocalStorage('comments', this.commentsArray)
     }
 
@@ -90,6 +90,7 @@ export class SetDataService {
             }
             return ele;
         });
+        this.storageService.saveToLocalStorage('comments', this.commentsArray)
     }
     changeScore(id: number, score: number) {
         this.commentsArray = this.commentsArray.map((ele) => {
@@ -124,15 +125,20 @@ export class SetDataService {
         this.storageService.saveToLocalStorage('comments', this.commentsArray)
     }
 
-    changeReplyArry(replyArry: Reply[], id: number, value: string | number) {
-        let replyId = id;
-        replyArry = replyArry?.map((reply) => {
-            if(reply.id == replyId) {
-                // reply[value] = value;
-                return reply;
+    changeReplyArry<T>(username: string, id: number, value: Reply['score']) {
+        this.commentsArray = this.commentsArray.map((ele) => {
+            if(ele.user.username == username) {
+                ele.replies = ele.replies?.map((reply): Reply => {
+                   if(reply.id == id) {
+                       reply.score = value;
+                       return reply;
+                   }
+                   return reply;
+                }
+                )
+                return ele;
             }
-
-            return reply;
-        })
+            return ele;
+        });
     }
 }

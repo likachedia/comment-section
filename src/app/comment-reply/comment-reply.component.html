@@ -11,7 +11,7 @@
             <div class="card__header-img">
                 <img [src]="imagePath" alt="profile-image">
             </div>               
-             <small>{{reply.user.username}}</small>
+             <small *ngIf="!isCurrentUser; else you">{{reply.user.username}}</small>
             <span>{{reply.createdAt}}</span>
 
             <div class="card__header-actions">
@@ -23,11 +23,14 @@
         </div>
         <div class="card__content">
             <ng-container *ngIf="!updaiting">{{'@'+reply.replyingTo + " "+ reply.content}}</ng-container>
-            <!-- <input type="text" [(ngModel)]='reply.content' *ngIf="updaiting"/> -->
-            <textarea name="coment-content" id="" cols="50" rows="60" [(ngModel)]='reply.content' *ngIf="updaiting"></textarea>
+            <textarea name="coment-content" id="" cols="20" rows="10" [(ngModel)]='reply.content' *ngIf="updaiting"></textarea>
             
         </div>
     </div>
 </section>
 <app-reply *ngIf="replying" [reply]="reply" (hidereply)="displyReply()">
 </app-reply>
+
+<ng-template #you>
+    <span class="you">You</span>
+</ng-template>
