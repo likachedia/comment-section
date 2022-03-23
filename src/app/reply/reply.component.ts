@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SetDataService } from '../shared/setDataService.service';
 import { Comment, Reply, User } from '../shared/utils';
@@ -5,7 +6,8 @@ import { Comment, Reply, User } from '../shared/utils';
 @Component({
   selector: 'app-reply',
   templateUrl: './reply.component.html',
-  styleUrls: ['./reply.component.scss']
+  styleUrls: ['./reply.component.scss'],
+  providers: [DatePipe]
 })
 export class ReplyComponent implements OnInit {
   @Input() reply!: Reply | Comment
@@ -14,12 +16,20 @@ export class ReplyComponent implements OnInit {
   comments: Comment[] = []
   imagePath = ''
   content = ''
-
-  constructor(private setDataService: SetDataService) { }
+  
+  constructor(private setDataService: SetDataService, private date: DatePipe) { }
   
   ngOnInit() {
     this.currentUser = this.setDataService.currentUser
     this.imagePath =`../../${this.currentUser?.image?.png}`
+  }
+  model: Comment | Reply = {
+      id:  1,
+      content: this.content,
+      createdAt: '',
+      score: 0,
+      user: this.currentUser,
+      replies: [],
   }
 
   addReply(reply: Comment | Reply) {
@@ -30,7 +40,7 @@ export class ReplyComponent implements OnInit {
        newReply = {
         id: id! + 1,
         content: this.content,
-        createdAt: this.getCreatedData(),
+        createdAt: this.getCreatedData()!,
         score: 0,
         user: this.currentUser,
         replies: [],
@@ -41,7 +51,7 @@ export class ReplyComponent implements OnInit {
       newReply = {
         id: this.reply.replies!.length + 1,
         content: this.content,
-        createdAt: this.getCreatedData(),
+        createdAt: this.getCreatedData()!,
         score: 0,
         user: this.currentUser,
         replies: [],
@@ -54,13 +64,16 @@ export class ReplyComponent implements OnInit {
   }
 
   getCreatedData() {
-    const dateObj = new Date();
-    let month = dateObj.getUTCMonth() + 1;
-    let day = dateObj.getUTCDate();
-    let year = dateObj.getUTCFullYear();
+    // const dateObj = new Date();
+    // let month = dateObj.getUTCMonth() + 1;
+    // let day = dateObj.getUTCDate();
+    // let year = dateObj.getUTCFullYear();
 
-    let newdate = year + " " + month + " " + day;
-    return newdate.toString();
+    // let newdate = year + " " + month + " " + day;
+
+   return this.date.transform(new Date, 'short');
+
+    // return   newdate.toString();
   }
  
 
@@ -72,7 +85,7 @@ export class ReplyComponent implements OnInit {
       const newComment: Comment = {
         id: Date.now(),
         content: this.content,
-        createdAt: this.getCreatedData(),
+        createdAt: this.getCreatedData()!,
         score: 0,
         user: this.currentUser,
         replies: []

@@ -63,20 +63,27 @@ export class SetDataService {
     }
 
     updateReply(updatedReply: Reply) {
-        this.commentsArray = this.commentsArray.map((ele) => {
-            if(ele.user.username == updatedReply.replyingTo) {
-                ele.replies = ele.replies?.map((reply) => {
-                    if(reply.id == updatedReply.id) {
-                        reply.content = updatedReply.content
-                        return reply;
-                    }
-                    return reply;
-                }
-                )
-                return ele;
-            }
-            return ele;
-        });
+
+        this.commentsArray = this.changeObj(
+            this.commentsArray,
+            updatedReply,
+            'content',
+            updatedReply.content
+          );
+        // this.commentsArray = this.commentsArray.map((ele) => {
+        //     if(ele.user.username == updatedReply.replyingTo) {
+        //         ele.replies = ele.replies?.map((reply) => {
+        //             if(reply.id == updatedReply.id) {
+        //                 reply.content = updatedReply.content
+        //                 return reply;
+        //             }
+        //             return reply;
+        //         }
+        //         )
+        //         return ele;
+        //     }
+        //     return ele;
+        // });
         this.storageService.saveToLocalStorage('comments', this.commentsArray);
     }
 
@@ -104,41 +111,70 @@ export class SetDataService {
     }
     
     changeScoreReply(reply: Reply, score: number) {
-        let username = reply.replyingTo
-        let replyId = reply.id
-        this.commentsArray = this.commentsArray.map((ele) => {
-            if(ele.user.username == username) {
-                ele.replies = ele.replies?.map((reply) => {
-                   if(reply.id == replyId) {
-                       reply.score = score;
-                       return reply;
-                   }
+        // let username = reply.replyingTo
+        // let replyId = reply.id
 
-                   return reply;
-                }
-                )
-                return ele;
-            }
-            return ele;
-        });
+        this.commentsArray = this.changeObj(
+            this.commentsArray,
+            reply,
+            'score',
+            reply.score
+          );
+        // this.commentsArray = this.commentsArray.map((ele) => {
+        //     if(ele.user.username == username) {
+        //         ele.replies = ele.replies?.map((reply) => {
+        //            if(reply.id == replyId) {
+        //                reply.score = score;
+        //                return reply;
+        //            }
+
+        //            return reply;
+        //         }
+        //         )
+        //         return ele;
+        //     }
+        //     return ele;
+        // });
 
         this.storageService.saveToLocalStorage('comments', this.commentsArray)
     }
 
-    changeReplyArry<T>(username: string, id: number, value: Reply['score']) {
-        this.commentsArray = this.commentsArray.map((ele) => {
-            if(ele.user.username == username) {
-                ele.replies = ele.replies?.map((reply): Reply => {
-                   if(reply.id == id) {
-                       reply.score = value;
-                       return reply;
-                   }
-                   return reply;
-                }
-                )
-                return ele;
-            }
+    // changeReplyArry<T extends keyof Reply>(array: Comment[], username: string, id: number, score: string) {
+
+    //     this.commentsArray = this.commentsArray.map((ele) => {
+    //         if(ele.user.username == username) {
+    //             ele.replies = ele.replies?.map((reply): Reply => {
+    //                if(reply.id == id) {
+    //                 //    reply[score] = score;
+    //                    return reply;
+    //                }
+    //                return reply;
+    //             }
+    //             )
+    //             return ele;
+    //         }
+    //         return ele;
+    //     });
+    // }
+
+    changeObj<T extends keyof Reply>(
+        data: Comment[],
+        upData: Reply,
+        propertyName: T,
+        newData: Reply[T]
+      ) {
+        return data.map((ele: Comment) => {
+          if (ele.user.username == upData.replyingTo) {
+            ele.replies = ele.replies?.map((reply) => {
+              if (reply.id == upData.id) {
+                reply[propertyName] = newData;
+                return reply;
+              }
+              return reply;
+            });
             return ele;
+          }
+          return ele;
         });
-    }
+      }
 }
