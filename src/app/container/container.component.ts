@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SetDataService } from '../shared/setDataService.service';
 import { DataService } from '../shared/dataService.service';
 import { StorageService } from '../shared/storageService.service';
-import { Comment, Data, Reply, User } from '../shared/utils';
+import { Comment, Data, Reply, User } from '../shared/model';
 
 @Component({
   selector: 'app-container',

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SetDataService } from '../shared/setDataService.service';
 import { StorageService } from '../shared/storageService.service';
-import { Comment, Reply, User } from '../shared/utils';
+import { Comment, Reply, User } from '../shared/model';
 
 @Component({
   selector: 'app-comment',

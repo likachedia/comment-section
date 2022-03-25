@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Comment } from './shared/utils';
+import { Comment } from './shared/model';
 
 @Pipe({
   name: 'sort'

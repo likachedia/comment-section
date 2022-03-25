@@ -15,9 +15,12 @@
             <span>{{reply.createdAt}}</span>
 
             <div class="card__header-actions">
-                <button type="button" *ngIf="isCurrentUser" (click)="deleteComment(reply)" class="btn btn--delete">delete</button>
-                <button type="button" *ngIf="isCurrentUser" (click)="updateReply(reply)" class="btn btn--update">edit</button>
-                <button type="button" (click)="displyReply()" *ngIf="!isCurrentUser" class="btn btn--reply">Reply</button>
+                <button type="button" *ngIf="isCurrentUser" (click)="deleteComment(reply)" class="btn btn--delete">
+                    <img src="./../../assets/images/icon-delete.svg" alt="delete-icon"> delete</button>
+                <button type="button" *ngIf="isCurrentUser" (click)="updateReply(reply)" class="btn btn--update">
+                    <img src="./../../assets/images/icon-edit.svg" alt="edit-icon"> edit</button>
+                <button type="button" (click)="displyReply()" *ngIf="!isCurrentUser" class="btn btn--reply">
+                    <img src="./../../assets/images/icon-reply.svg" alt="reply-icon">Reply</button>
             </div>
             
         </div>

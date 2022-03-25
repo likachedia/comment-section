@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SetDataService } from '../shared/setDataService.service';
 import { StorageService } from '../shared/storageService.service';
-import { Reply, User, Comment } from '../shared/utils';
+import { Reply, User, Comment } from '../shared/model';
 
 @Component({
   selector: 'app-comment-reply',
